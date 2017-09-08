@@ -99,7 +99,7 @@ class Solution:
             self.value_sum(root.right, count, lright)
 
 
-# 给定一个二叉树,确定它是高度平衡的。对于这个问题,一棵高度平衡的二叉树的定义是：一棵二叉树中每个节点的两个子树的深度相差不会超过1。 
+# 给定一个二叉树,确定它是高度平衡的。对于这个问题,一棵高度平衡的二叉树的定义是：一棵二叉树中每个节点的两个子树的深度相差不会超过1。
 # 总耗时: 1586 ms
 
 class Solution2:
@@ -115,7 +115,7 @@ class Solution2:
 
         return abs(self.get_height(root.left) -
                    self.get_height(root.right)) < 2 and \
-            self.isBalanced(root.left) and self.isBalanced(root.left)
+            self.isBalanced(root.left) and self.isBalanced(root.right)
 
     def get_height(self, node):
         if not node:
@@ -123,6 +123,23 @@ class Solution2:
 
         return 1 + max(self.get_height(node.left), self.get_height(node.right))
 
+
+# 二叉树的最大深度
+# 给定一个二叉树，找出其最大深度。
+# 二叉树的深度为根节点到最远叶子节点的距离。
+# 总耗时: 872 ms
+class Solution3:
+    """
+    @param root: The root of binary tree.
+    @return: An integer
+    """
+
+    def maxDepth(self, root):
+        # write your code here
+        if not root:
+            return 0
+
+        return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
 
 if __name__ == '__main__':
     # elems = ['a', 'b', 'c', 'd', 'e', 'f']

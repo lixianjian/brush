@@ -8,27 +8,6 @@ Created on 2017年8月29日
 
 import heapq
 
-
-class TestClass(object):
-    """ test class in visual studio code
-    """
-
-    def __init__(self):
-        """
-        """
-        pass
-
-    def method1(self):
-        """ method 1
-        """
-        pass
-
-    def method2(self):
-        """ method 2
-        """
-        pass
-
-
 class Solution:
     """
     @param: nums: A list of integers

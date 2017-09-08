@@ -7,6 +7,8 @@ Created on 2017年8月29日
 '''
 
 # >mk, m=第n个超级丑数的值
+
+
 class Solution(object):
 
     def isUgly(self, num, primes=[2, 3, 5]):
@@ -42,6 +44,8 @@ class Solution(object):
 
 import heapq
 from copy import copy
+
+
 class Solution2(object):
 
     def isUgly(self, num, primes=[2, 3, 5]):
@@ -82,8 +86,10 @@ class Solution2(object):
 
 
 class Solution3(object):
+
     def nthSuperUglyNumber(self, n, primes):
         uglies = [1]
+
         def gen(prime):
             for ugly in uglies:
                 yield ugly * prime
@@ -95,16 +101,22 @@ class Solution3(object):
         return uglies[-1]
 
 import itertools
+
+
 class Solution4(object):
+
     def nthSuperUglyNumber(self, n, primes):
         uglies = [1]
-        merged = heapq.merge(*map(lambda p: (u*p for u in uglies), primes))
+        merged = heapq.merge(*map(lambda p: (u * p for u in uglies), primes))
         uniqed = (u for u, _ in itertools.groupby(merged))
-        map(uglies.append, itertools.islice(uniqed, n-1))
+        map(uglies.append, itertools.islice(uniqed, n - 1))
         return uglies[-1]
 
 # 总耗时: 1435 ms
+
+
 class Solution5(object):
+
     def nthSuperUglyNumber(self, n, primes):
         """
         :type n: int
@@ -129,23 +141,25 @@ class Solution5(object):
                     v_list[i] = ugly[i_list[i]] * primes[i]
         return ugly[-1]
 
+
 class Solution6(object):
+
     def nthSuperUglyNumber(self, n, primes):
         """
         :type n: int
         :type primes: List[int]
         :rtype: int
         """
-        nums=[1]*len(primes)
-        idx=[0]*len(primes)
-        best=[1]
-        cur=1
-        for i in range(n-1):
+        nums = [1] * len(primes)
+        idx = [0] * len(primes)
+        best = [1]
+        cur = 1
+        for i in range(n - 1):
             for j in range(len(idx)):
-                if nums[j]==cur:
-                    nums[j]=best[idx[j]]*primes[j]
-                    idx[j]+=1
-            cur=min(nums)
+                if nums[j] == cur:
+                    nums[j] = best[idx[j]] * primes[j]
+                    idx[j] += 1
+            cur = min(nums)
             best.append(cur)
         return best[-1]
 

@@ -112,14 +112,155 @@ class Solution2:
         del z[:]
         return A
 
+# 摆动排序
+# 给你一个没有排序的数组，请将原数组就地重新排列满足如下性质
+# nums[0] <= nums[1] >= nums[2] <= nums[3]....
+# 样例
+# 给出数组为 nums = [3, 5, 2, 1, 6, 4] 一种输出方案为 [1, 6, 2, 5, 3, 4]
+# 总耗时: 522 ms
+
+
+class Solution3(object):
+    """
+    @param {int[]} nums a list of integer
+    @return nothing, modify nums in-place instead
+    """
+
+    def wiggleSort(self, nums):
+        # Write your code here
+        def s(nums, low, high):
+            if low > high:
+                return nums
+            mid = nums[low]
+            i = low + 1
+            head, tail = low, high
+            while head < tail:
+                if nums[i] > mid:
+                    nums[tail], nums[i] = nums[i], nums[tail]
+                    tail -= 1
+                else:
+                    nums[head], nums[i] = nums[i], nums[head]
+                    head += 1
+                    i += 1
+            nums[head] = mid
+            if head > self.k:
+                s(nums, low, head - 1)
+            else:
+                s(nums, head + 1, high)
+            print(nums)
+            return nums
+
+        length = len(nums)
+        if length < 3:
+            if length == 2:
+                if nums[0] > nums[1]:
+                    nums[0], nums[1] = nums[1], nums[0]
+            return nums
+        self.k = (length - 1) // 2
+        s(nums, 0, length - 1)
+        print(nums, self.k)
+        self.k += 1
+        if length % 2 == 0:
+            for i in range(1, self.k, 2):
+                nums[i], nums[self.k + i] = nums[self.k + i], nums[i]
+        else:
+            for i in range(1, self.k + 1, 2):
+                nums[i], nums[length - i] = nums[length - i], nums[i]
+
+        return nums
+
+    def wiggleSortBak(self, nums):
+        # Write your code here
+        for i in range(1, len(nums)):
+            r = i % 2
+            c = nums[i - 1]
+            n = nums[i]
+            if (r > 0 and c > n) or (r == 0 and c < n):
+                nums[i - 1], nums[i] = nums[i], nums[i - 1]
+
+
+def quik_sort_review(nums, low, high):
+    """ 快速排序
+    """
+    if low > high:
+        return nums
+
+    tmp = nums[low]
+    i = low + 1
+    head, tail = low, high
+    while head < tail:
+        if nums[tail] > tmp:
+            nums[tail], nums[i] = nums[i], nums[tail]
+            tail -= 1
+        else:
+            nums[head], nums[i] = nums[i], nums[head]
+            head += 1
+            i += 1
+    nums[head] = tmp
+    quik_sort_review(nums, low, head - 1)
+    quik_sort_review(nums, head + 1, high)
+    return nums
+
+
+def merge_sort_review(nums):
+
+    def merge(left, right):
+        result = []
+        i, j = 0, 0
+        while i < len(left) and j < len(right):
+            lval = left[i]
+            rval = right[j]
+            if lval <= rval:
+                result.append(lval)
+                i += 1
+            else:
+                result.append(rval)
+                j += 1
+        result.extend(left[i:])
+        result.extend(right[j:])
+        return result
+
+    length = len(nums)
+    if length < 2:
+        return nums
+
+    mid = length // 2
+    left = merge_sort_review(nums[:mid])
+    right = merge_sort_review(nums[mid:])
+    return merge(left, right)
+
+
+def choose_sort_review(nums):
+    length = len(nums)
+    for i in range(length):
+        for j in range(i + 1, length):
+            if nums[i] <= nums[j]:
+                continue
+            nums[i], nums[j] = nums[j], nums[i]
+    return nums
+
+
+def bubble_sort_review(nums):
+    length = len(nums)
+    for i in range(length):
+        for j in range(length - i - 1):
+            if nums[j] <= nums[j + 1]:
+                continue
+            nums[j], nums[j + 1] = nums[j + 1], nums[j]
+        print(nums)
+    return nums
+
+
 if __name__ == '__main__':
-    #     nums = [5, 2, 100, 7, 1, 6, 4, 3, 200, 1000]
-    #     nums = [4, 5, 1, 2, 3]
-    #     quick_sort(nums, low=0, high=len(nums) - 1)
-    #     merge_sort(nums)
-    #
-    #     print(nums)
-    s = Solution()
-    A = [4, 5, 1, 2, 3]
-    s.sortIntegers2(A)
-    print(A)
+
+    # s = Solution3()
+    # nums = [3, 5, 2, 1, 6, 4]
+    # nums = [1, 1, 1, 1, 2]
+    # s.wiggleSort(nums)
+    # print(nums)
+
+    nums = [3, 5, 2, 1, 6, 4]
+    # print(quik_sort_review(nums, 0, 5))
+    # print(merge_sort_review(nums))
+    # print(choose_sort_review(nums))
+    print(bubble_sort_review(nums))
